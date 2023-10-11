@@ -1,15 +1,18 @@
 from django.db import models
 from django.contrib.auth.models import User
-from accountapp.models import Account, Currency
+from accountapp.models import Account, Currency,Branch
 from django.db.models.signals import post_save
 
 from django.dispatch import receiver
+
 # Create your models here.
 
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     account = models.ForeignKey(Account,on_delete=models.SET_NULL,blank=True,null=True)
     currency_user = models.ManyToManyField(Currency)
+    branch = models.ManyToManyField(Branch)
+
     #project_user = models.ManyToManyField(Project)
     phone_number = models.CharField(max_length=15,null=True,blank=True)
     firstname = models.CharField(max_length=15,null=True,blank=True)

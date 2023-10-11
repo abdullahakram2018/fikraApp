@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accountapp',
+    'projects',
+    'project',
     'rest_framework',
     'rest_framework.authtoken',
     'userapp',
@@ -84,11 +86,28 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+
+        'NAME': 'fikra_1',
+
+        'USER': 'fikra',
+
+        'PASSWORD': 'F774331236!',
+        
+        'HOST': 'database-1.clbkntw4esx9.us-east-1.rds.amazonaws.com',
+        
+        'PORT': '5432',
+        
+     }
+ }
+"""
+DATABASES = {
+    'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
+"""
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

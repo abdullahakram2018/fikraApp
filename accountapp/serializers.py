@@ -9,10 +9,7 @@ class CurrencySerializer(serializers.ModelSerializer):
     class Meta:
         model = Currency
         fields = "__all__"
-class FinancialCenterSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = FinancialCenter
-        fields = "__all__"
+
 class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account

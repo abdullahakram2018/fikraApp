@@ -145,62 +145,6 @@ def currency_detail(request, pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
     
 
-"""
-    Retrieve, Insert , update or delete a code FinancialCenter.
-"""
-@api_view(['POST','GET'])
-@permission_classes((IsAuthenticated, ))
-def fcenter_api(request):
-
-    """
-    Retrieve or Insert a code FinancialCenter.
-    """
-    
-    try:
-        currency = FinancialCenter.objects.all()
-        user = request.user
-    except FinancialCenter.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-    if request.method == 'GET':
-        serializer = FinancialCenterSerializer(currency,many=True)
-        return Response({"fcenter":serializer.data})
-    
-    elif request.method == 'POST':
-        serialize = FinancialCenterSerializer(data=request.data, many=isinstance(request.data,list))
-        if serialize.is_valid(raise_exception=True):
-            serialize.save(user_add = user)
-            return Response(serialize.data,status=status.HTTP_201_CREATED)
-        return Response(serialize.errors,status=status.HTTP_400_BAD_REQUEST)
-
-
-@api_view(['GET', 'PUT', 'DELETE'])
-@permission_classes((IsAuthenticated, ))
-def fcenter_detail(request, pk):
-  
-    """
-    Retrieve, update or delete a code FinancialCenter.
-    """
-    try:
-        
-        financialcenter = FinancialCenter.objects.get(pk=pk)
-        user = request.user
-    except FinancialCenter.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-    if request.method == 'GET':
-        serializer = FinancialCenterSerializer(financialcenter)
-        return Response(serializer.data)
-
-    elif request.method == 'PUT':
-        serializer = FinancialCenterSerializer(financialcenter, data=request.data)
-        if serializer.is_valid():
-            serializer.save(user_edit = user)
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    elif request.method == 'DELETE':
-        financialcenter.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 
