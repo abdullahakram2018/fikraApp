@@ -101,9 +101,10 @@ def user(request):
             'id':user.id,
             'username':user.username,
             'email':user.email,
-            #'image':profile.image,
+            'image':profile.image,
             'phone_number':profile.phone_number,
             'address':profile.address,
+            'branch':profile.branch,
             
         },
         'error': 'not authenticated'

@@ -1,11 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class Project(models.Model):
     name_ar = models.CharField(max_length=180 , blank=True)
     name_en = models.CharField(max_length=180 , blank=True)
     note_ar = models.CharField(max_length=180 , blank=True)
     note_en = models.CharField(max_length=180 , blank=True)
+    logo = models.ImageField(upload_to="logo",blank=True)
     user_add = models.ForeignKey(User,on_delete=models.PROTECT, blank=True,null=True, related_name="add_project")
     user_edit = models.ForeignKey(User,on_delete=models.PROTECT, blank=True,null=True , related_name="edit_project")
     date_add = models.DateTimeField(auto_now_add = True, auto_now = False, blank = True)
@@ -27,4 +30,10 @@ class Branch(models.Model):
 
     def __str__(self):
         return self.name
+@receiver(post_save, sender=Project)
+def create_branch_branch(sender,instance,created, **kwargs):
+    if created:
+        Branch.objects.create(
+            project = instance
+        )
     
