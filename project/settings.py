@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-y1@i9r^#%kh8kjj8@5og=iw!9)4*qf&ff$uvt+c@b%kzpog=^y
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["54.162.24.192"]
+ALLOWED_HOSTS = ["54.162.24.192","127.0.0.1"]
 
 
 # Application definition
@@ -39,8 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accountapp',
-    'projects',
-    'project',
     'rest_framework',
     'rest_framework.authtoken',
     'userapp',
@@ -83,7 +81,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -107,7 +105,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-"""
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -145,6 +143,7 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = 'static/'
+
 
 
 # Default primary key field type

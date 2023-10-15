@@ -1,6 +1,17 @@
 from rest_framework import serializers
 from accountapp.models import *
 
+
+class CompanySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Company
+        fields = "__all__"
+class BranchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Branch
+        fields = "__all__"
+
+
 class TypeDocSerializer(serializers.ModelSerializer):
     class Meta:
         model = TypeDoc

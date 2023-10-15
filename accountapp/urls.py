@@ -1,6 +1,8 @@
 from django.urls import path
 from accountapp import views
 urlpatterns = [
+    path('company',views.companys,name='company'),
+    path('branch', views.branch,name='branch'),
     path('typedoc',views.typeDoc_api,name='create_typedoc'),
     path('typeDoc/<int:pk>/', views.typeDoc_detail,name='typeDoc_detail'),
     path('currency',views.currency_api,name='create_currency'),

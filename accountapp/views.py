@@ -10,6 +10,77 @@ from accountapp.models import *
 from django.db import connection
 from django.db.models import Sum , Count
 # Create your views here.
+
+
+@api_view(['GET', 'PUT', 'DELETE','POST'])
+@permission_classes((IsAuthenticated, ))
+def companys(request):
+ 
+    try:
+        company_id = request.POST['company_id']
+        company = Company.objects.filter(id=company_id)
+    except Company.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = CompanySerializer(company,many=True)
+
+        return Response({"detailcompany":serializer.data})
+    
+    elif request.method == 'POST':
+        serialize = CompanySerializer(data=request.data, many=isinstance(request.data,list))
+        if serialize.is_valid(raise_exception=True) :
+            
+            return Response(serialize.data,status=status.HTTP_201_CREATED)
+        return Response(serialize.errors,status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'PUT':
+        serializer = CompanySerializer(company, data=request.data)
+        if serializer.is_valid():
+            serializer.save(id=Company.objects.get(id=company_id))
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        company.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET', 'PUT', 'DELETE','POST'])
+@permission_classes((IsAuthenticated, ))
+def branch(request):
+
+    try:
+        company_id = request.POST['company_id']
+        branch_id = request.POST['branch_id']
+        company = Branch.objects.filter(company=company_id)
+        branch = Branch.objects.filter(id=branch_id)
+    except Company.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        serializer = CompanySerializer(branch,many=True)
+
+        return Response({"detailbranch":serializer.data})
+    
+    elif request.method == 'POST':
+        serialize = BranchSerializer(data=request.data, many=isinstance(request.data,list))
+        if serialize.is_valid(raise_exception=True) :
+            serialize.save(company=Company.objects.get(id=company_id))
+            return Response(serialize.data,status=status.HTTP_201_CREATED)
+        return Response(serialize.errors,status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'PUT':
+        serializer = BranchSerializer(branch, data=request.data)
+        if serializer.is_valid():
+            serializer.save(company=Company.objects.get(id=company_id))
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        branch.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    
 class SaleUserViewSet(ModelViewSet):
     queryset = Currency.objects.all()
     serializer_class = CurrencySerializer
