@@ -1,3 +1,4 @@
+from userapp.models import Profile
 import json
 from django.shortcuts import get_object_or_404, render
 from rest_framework.decorators import api_view , permission_classes
@@ -234,6 +235,8 @@ def account_api(request):
     try:
         account = Account.objects.all()
         user = request.user
+        profile = Profile.objects.get(user=user.id)
+        branch_id = Branch.objects.get(pk=profile.branch)
     except Account.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     if request.method == 'GET':
@@ -243,7 +246,7 @@ def account_api(request):
     elif request.method == 'POST':
         serialize = AccountSerializer(data=request.data, many=isinstance(request.data,list))
         if serialize.is_valid(raise_exception=True):
-            serialize.save(user_add = user)
+            serialize.save(user_add = user,branch=branch_id)
             return Response(serialize.data,status=status.HTTP_201_CREATED)
         return Response(serialize.errors,status=status.HTTP_400_BAD_REQUEST)
 @api_view(['GET'])
