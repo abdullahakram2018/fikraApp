@@ -12,7 +12,6 @@ class Profile(models.Model):
     account = models.ForeignKey(Account,on_delete=models.SET_NULL,blank=True,null=True)
     currency_user = models.ManyToManyField(Currency)
     branch = models.ManyToManyField(Branch)
-
     #project_user = models.ManyToManyField(Project)
     phone_number = models.CharField(max_length=15,null=True,blank=True)
     firstname = models.CharField(max_length=15,null=True,blank=True)

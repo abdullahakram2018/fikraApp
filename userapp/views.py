@@ -68,25 +68,15 @@ def user_detail(request, pk):
 def login_api(request):
     serializer = AuthTokenSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
-    user = serializer.validated_data['user']
-    
-    profile = Profile.objects.get(user=user.id)
-    
-    profiledata = ProfileSerializer(profile)
-   
-    users = request.user
-    
-    token, created = Token.objects.get_or_create(user=user)
-    
-    if profile.success == True:
-        
-        return Response({
-            
+    user = serializer.validated_data['user']    
+    profile = Profile.objects.get(user=user.id)   
+    profiledata = ProfileSerializer(profile)  
+    users = request.user    
+    token, created = Token.objects.get_or_create(user=user)    
+    if profile.success == True:  
+        return Response({   
             'token':token.key,
             'profile':profiledata.data,
-            
-            
-           
         })
     return Response({'error': 'not Success'},status=400)
 

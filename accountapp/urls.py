@@ -8,6 +8,7 @@ urlpatterns = [
     path('currency',views.currency_api,name='create_currency'),
     path('currency/<int:pk>/', views.currency_detail,name='currency_detail'),
     path('account',views.account_api,name='create_account'),
+    path('group_account',views.group_account_api,name='group_account'),
     path('account/<int:pk>/', views.account_detail,name='account_detail'),
     path('create_unit',views.unit_api,name='create_unit'),
     path('unit/<int:pk>/', views.unit_detail,name='unit_detail'),

@@ -29,6 +29,7 @@ def companys(request):
     
     elif request.method == 'POST':
         serialize = CompanySerializer(data=request.data, many=isinstance(request.data,list))
+       
         if serialize.is_valid(raise_exception=True) :
             
             return Response(serialize.data,status=status.HTTP_201_CREATED)
@@ -245,6 +246,17 @@ def account_api(request):
             serialize.save(user_add = user)
             return Response(serialize.data,status=status.HTTP_201_CREATED)
         return Response(serialize.errors,status=status.HTTP_400_BAD_REQUEST)
+@api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
+def group_account_api(request):    
+    try:
+        account = Account.objects.filter(typeAccount="main")
+        
+    except Account.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    if request.method == 'GET':
+        serializer = AccountSerializer(account,many=True)
+        return Response({"account":serializer.data})
 
 
 @api_view(['GET', 'PUT', 'DELETE'])

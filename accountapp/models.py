@@ -74,11 +74,10 @@ class CurrencyPrice(models.Model):
 
     
 class Account(models.Model):
+    code = models.CharField(max_length=180 , blank=True)
     name = models.CharField(max_length=180 , blank=True)
-    ceiling = models.DecimalField(max_digits=10, decimal_places=2)
-    group = models.CharField(max_length=180 , blank=True)
-    currency = models.ForeignKey(Currency,blank=True,null=True,on_delete=models.PROTECT)
-    typeAccount = models.CharField(max_length=180 , blank=True)
+    main_account = models.ForeignKey(to="self",on_delete=models.CASCADE, blank=True,null=True,)
+    typeAccount = models.CharField(max_length=255 , blank=True,choices=(('main',"main"),("sub","sub")))
     note = models.CharField(max_length=180 , blank=True)
     branch = models.ForeignKey(Branch,on_delete=models.PROTECT, blank=True,null=True, related_name="account_branch")
     user_add = models.ForeignKey(User,on_delete=models.PROTECT, blank=True,null=True, related_name="add_acc")
