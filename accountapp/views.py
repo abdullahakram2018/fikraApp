@@ -236,11 +236,13 @@ def account_api(request):
         account = Account.objects.all()
         user = request.user
         profile = Profile.objects.get(user=user.id)
-        branch_id = profile.branch.pk
+        branch_id = profile.branch
+        print(branch_id)
         
     except Account.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     if request.method == 'GET':
+        print(branch_id)
         serializer = AccountSerializer(account,many=True)
         return Response({"account":serializer.data})
     
