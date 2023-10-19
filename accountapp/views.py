@@ -236,7 +236,7 @@ def account_api(request):
         account = Account.objects.all()
         user = request.user
         profile = Profile.objects.get(user=user.id)
-        branch_id = Branch.objects.get(pk=profile.branch.id)
+        branch_id = profile.branch
     except Account.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     if request.method == 'GET':
