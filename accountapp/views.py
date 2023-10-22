@@ -236,7 +236,7 @@ def account_api(request):
         account = Account.objects.all()
         user = request.user
         profile = Profile.objects.filter(user=user.id)
-        branch_id = profile.branch
+        branch_id = profile
         print(branch_id)
         
     except Account.DoesNotExist:
