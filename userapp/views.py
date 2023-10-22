@@ -81,22 +81,11 @@ def login_api(request):
     return Response({'error': 'not Success'},status=400)
 
 @api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
 def user(request):
     
     user = request.user
     profile = Profile.objects.get(user=user.id)
-    permission_classes = (IsAuthenticated,)
-    return Response({
-        'user_info':{
-            'id':user.id,
-            'username':user.username,
-            'email':user.email,
-            'image':profile.image,
-            'phone_number':profile.phone_number,
-            'address':profile.address,
-            'branch':profile.branch,
-            
-        },
-        'error': 'not authenticated'
-        },status=400)
+    serializer = ProfileSerializer(profile,many=True)
+    return Response(serializer.data)
    
