@@ -85,7 +85,7 @@ def login_api(request):
 def user(request):
     
     user = request.user
-    profile = Profile.objects.get(user=user.id)
+    profile = Profile.objects.filter(user=user.id)
     serializer = ProfileSerializer(profile,many=True)
     return Response(serializer.data)
    
