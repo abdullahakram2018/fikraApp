@@ -235,7 +235,7 @@ def account_api(request):
     try:
         account = Account.objects.all()
         user = request.user
-        profile = Profile.objects.get(user=user.id)
+        profile = Profile.objects.filter(user=user.id)
         branch_id = profile.branch
         print(branch_id)
         
