@@ -249,7 +249,7 @@ def account_api(request):
     elif request.method == 'POST':
         serialize = AccountSerializer(data=request.data, many=isinstance(request.data,list))
         if serialize.is_valid(raise_exception=True):
-            serialize.save(user_add = user,branch=branch_id)
+            serialize.save(user_add = user)
             return Response(serialize.data,status=status.HTTP_201_CREATED)
         return Response(serialize.errors,status=status.HTTP_400_BAD_REQUEST)
 @api_view(['GET'])
