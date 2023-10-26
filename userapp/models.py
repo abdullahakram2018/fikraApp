@@ -10,8 +10,8 @@ from django.dispatch import receiver
 class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     account = models.ForeignKey(Account,on_delete=models.SET_NULL,blank=True,null=True)
-    branch_defult = models.ForeignKey(Branch,on_delete=models.SET_NULL,blank=True,null=True)
-    currency_defult = models.ForeignKey(Currency,on_delete=models.SET_NULL,blank=True,null=True)
+    branch_defult = models.ForeignKey(Branch,on_delete=models.SET_NULL,blank=True,null=True,related_name="branch_defult")
+    currency_defult = models.ForeignKey(Currency,on_delete=models.SET_NULL,blank=True,null=True,related_name="currency_defult")
     currency_user = models.ManyToManyField(Currency)
     branch = models.ManyToManyField(Branch)
     #project_user = models.ManyToManyField(Project)
